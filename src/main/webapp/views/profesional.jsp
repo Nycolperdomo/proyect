@@ -16,6 +16,7 @@
 		<th>No<br>Documento</th>
 		<th>Fecha<br>nacimiento</th>
 		<th>Correo</th>
+		<th>Estado</th>
 	
 		<th colspan="2">Acciones</th>
 	</tr>
@@ -31,21 +32,24 @@
 			<td>${p.getFechaNacimiento()}</td>v
 			<!-- para poner el estado de la tabla que esta relacionada -->
 			<td>${p.ProUs.correo}</td>
+			<td>${p.ProUs.estado }</td>
 			
 			
-			<!--<c:if test="${p.isEstado()==true}">
+			
+			<c:if test="${p.ProUs.isEstado()==true}">
 				<td><span class="badge bg-success">Activo</span>
-					<a class="btn btn-danger btn-sm" onclick="changeEstado(event,${i.getIdIntegrante()},${i.isEstado()},'Integrante')" role="button">Inactivar</a>
+					<a class="btn btn-danger btn-sm" onclick="changeEstado(event,${p.getIDprofesional()},${p.ProUs.isEstado()},'Profesional')" role="button">Inactivar</a>
 				
 				</td>
 			</c:if>
-			<c:if test="${i.isEstadoRol()==false}">
+			<c:if test="${p.ProUs.isEstado()==false}">
 				<td><span class="badge bg-danger">Inactivo</span>
 				
-				<a class="btn btn-success btn-sm" onclick="changeEstado(event,${i.getIdIntegrante()},${i.isEstado()},'Integrante')" role="button">Activar</a>
+				<a class="btn btn-success btn-sm" onclick="changeEstado(event,${p.getIDprofesional()},${p.ProUs.isEstado()},'Profesional')" role="button">Activar</a>
 				</td>
-			</c:if>-->
+			</c:if>
 			<td>
+			
 			<a class="btn btn-warning" href="ProfesionalController?accion=ver&id=${p.getIDprofesional()}" role="button">Editar</a>
 			<!--invocar una funcion con onclick(borrar es el nombre de la funcion)-->
 			<a class="btn btn-danger" onclick="borrar(event,${p.getIDprofesional()},'Profesional')" role="button">Borrar</a>

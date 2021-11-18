@@ -5,18 +5,20 @@ import java.util.Date;
 public class profesionalVo {
 
 	private int IDprofesional;
-	private String 	nombre,apellido,telefono,correo,tipoDocumento,numeroDocumento;
-	private Date fechaNacimiento ;
+	private String 	fechaNacimiento,nombre,apellido,telefono,correo,tipoDocumento,numeroDocumento;
+	//private Date fechaNacimiento ;
 	
 	private UsuarioVo proUs;
+	private cargoVo proCar;
 	//private CargoVo procar;
 	
 	public profesionalVo() {
 		
 	}
 
+
 	public profesionalVo(int iDprofesional, String nombre, String apellido, String telefono, String correo,
-			String tipoDocumento, String numeroDocumento, Date fechaNacimiento, UsuarioVo proUs) {
+			String tipoDocumento, String numeroDocumento, String fechaNacimiento, UsuarioVo proUs, cargoVo proCar) {
 		super();
 		IDprofesional = iDprofesional;
 		this.nombre = nombre;
@@ -27,7 +29,9 @@ public class profesionalVo {
 		this.numeroDocumento = numeroDocumento;
 		this.fechaNacimiento = fechaNacimiento;
 		this.proUs = proUs;
+		this.proCar = proCar;
 	}
+
 
 	public int getIDprofesional() {
 		return IDprofesional;
@@ -85,11 +89,11 @@ public class profesionalVo {
 		this.numeroDocumento = numeroDocumento;
 	}
 
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
@@ -99,6 +103,16 @@ public class profesionalVo {
 
 	public void setProUs(UsuarioVo proUs) {
 		this.proUs = proUs;
+	}
+
+
+	public cargoVo getProCar() {
+		return proCar;
+	}
+
+
+	public void setProCar(cargoVo proCar) {
+		this.proCar = proCar;
 	}
 	
 	

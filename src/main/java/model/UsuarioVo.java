@@ -6,6 +6,7 @@ public class UsuarioVo {
 	private int IDusuario;
 	private String correo;
 	private String contraseña;
+	private boolean estado;
 	
 	
 	//constructores vacio,recibir datos sourse generate  (fields)
@@ -14,15 +15,20 @@ public class UsuarioVo {
 	}
 
 
-	public UsuarioVo(int iDusuario, String correo, String contraseña) {
+	
+	public UsuarioVo(int iDusuario, String correo, String contraseña, boolean estado) {
 		super();
 		IDusuario = iDusuario;
 		this.correo = correo;
 		this.contraseña = contraseña;
+		this.estado = estado;
 	}
 
 
-	
+
+
+
+
 	//getter y setter sourse generate  (acceder de forma segura a los datos)
 	public int getIDusuario() {
 		return IDusuario;
@@ -52,6 +58,19 @@ public class UsuarioVo {
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
+
+
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+	
 	
 	
 	

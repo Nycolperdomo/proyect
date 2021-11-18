@@ -16,11 +16,13 @@
 		<th>No<br>Documento</th>
 		<th>Fecha<br>nacimiento</th>
 		<th>Correo</th>
+		<th>Estado</th>
 	
 		<th colspan="2">Acciones</th>
 	</tr>
-	<!-- el member esta request.setAttribute("afectadas", afect);para recibir datos (controller) -->
+	<!-- (listar)el member esta request.setAttribute("afectadas", afect);para recibir datos (controller) -->
 	<c:forEach items="${afectadas}" var="a">	
+	
 		<tr>
 			<td>${a.getIDafectada()}</td>
 			<td>${a.getNombre()}</td>
@@ -28,21 +30,21 @@
 			<td>${a.getTelefono()}</td>
 			<td>${a.getTipoDocumento()}</td>
 			<td>${a.getNumeroDocumento()}</td>
-			<td>${a.getFechaNacimiento()}</td>v
+			<td>${a.getFechaNacimiento()}</td>
 			<!-- para poner el estado de la tabla que esta relacionada -->
 			<td>${a.AfecUs.correo}</td>
+			<td>${a.AfecUs.estado}</td>
 			
-			
-			<!--<c:if test="${p.isEstado()==true}">
+			<c:if test="${a.AfecUs.isEstado()==true}">
 				<td><span class="badge bg-success">Activo</span>
-					<a class="btn btn-danger btn-sm" onclick="changeEstado(event,${i.getIdIntegrante()},${i.isEstado()},'Integrante')" role="button">Inactivar</a>
+					<a class="btn btn-danger btn-sm" onclick="changeEstado(event,${a.getIDafectada()},${a.AfecUs.isEstado()},'Afectada')" role="button">Inactivar</a>
 				
 				</td>
 			</c:if>
-			<c:if test="${i.isEstadoRol()==false}">
+			<c:if test="${a.AfecUs.isEstado()==false}">
 				<td><span class="badge bg-danger">Inactivo</span>
 				
-				<a class="btn btn-success btn-sm" onclick="changeEstado(event,${i.getIdIntegrante()},${i.isEstado()},'Integrante')" role="button">Activar</a>
+				<a class="btn btn-success btn-sm" onclick="changeEstado(event,${a.getIDafectada()},${a.isEstado()},'Afectada')" role="button">Activar</a>
 				</td>
 			</c:if>-->
 			<td>

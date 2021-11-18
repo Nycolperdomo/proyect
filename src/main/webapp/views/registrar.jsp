@@ -61,7 +61,7 @@
     	
     	<div class="btn-group">
   <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="visually-hidden">Tipo de documento</span>
+    <span >Tipo de documento</span>
   </button>
   <ul class="dropdown-menu">
     <li><a class="dropdown-item" href="#">CC</a></li>

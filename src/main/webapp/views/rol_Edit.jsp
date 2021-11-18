@@ -15,6 +15,13 @@
   		<input type="password" class="form-control" name="contrasena" id="contrasena" placeholder="Ingrese la contraseña"/>
   	</div>
   	
+  	<div class="form-check">
+  <input class="form-check-input" type="checkbox" name="chkEstado" id="chkEstado" checked>
+  <label class="form-check-label" for="flexCheckChecked">
+    Activo
+  </label>
+</div>
+  	
 
 <div>
 <button type="submit" class="btn btn-primary">Guardar</button>

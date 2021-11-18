@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.RepaintManager;
 
 import model.UsuarioDao;
@@ -40,10 +41,41 @@ public class RolController extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	
 		String accion= request.getParameter("accion");
+		HttpSession session = request.getSession();
 		try {
 			if(accion!=null) {
 				switch (accion) {
-				
+
+				case "abrirLogin":
+					abrirLogin(request, response);
+					break;
+				case "login":
+					r.setCorreo(request.getParameter("correo"));
+					r.setContraseña(request.getParameter("password"));
+					
+					try {
+						r=udao.validarUsuario(r.getCorreo(),r.getContraseña());						
+						if(r.isEstado()==true) {
+							System.out.println("Se encontro un usuario activo");
+							session.setAttribute("us", r);
+							response.sendRedirect("RolController?accion=listarRoles");
+							
+						}
+						else if(r.isEstado()==false){
+							System.out.println("Se encontro un usuario inactivo");
+							//para enviar un msm
+							request.getRequestDispatcher("RolController?accion=abrirLogin&msn=Usuario Inactivo consulte con el administrador");
+						}
+						else {
+							System.out.println("Se encontro no registrado");
+							request.getRequestDispatcher("RolController?accion=abrirLogin&msn=Datos de acceso incorrectos");
+						}
+					}catch(Exception e) {
+						System.out.println("Se presentó un error "+e);
+					}
+					 
+					
+					break;
 				case "listarRoles": 
 					System.out.println("entro a la accion listar");
 					listarRoles(request,response);
@@ -66,6 +98,9 @@ public class RolController extends HttpServlet {
 					break;
 				case "edit":
 					edit(request,response);
+					break;
+				case "changeEstado":
+					changeEstado(request,response);
 					break;
 					
 				default:
@@ -131,6 +166,13 @@ private void add(HttpServletRequest request, HttpServletResponse response) throw
 	if(request.getParameter("contrasena") !=null) {
 		r.setContraseña(request.getParameter("contrasena"));
 	}
+
+	if(request.getParameter("chkEstado") !=null){
+		r.setEstado(true);
+	}
+	else {
+		r.setEstado(false);
+	}
 	
 	try {
 		udao.registrar(r);
@@ -160,6 +202,23 @@ private void delete(HttpServletRequest request, HttpServletResponse response) th
 	}
 }
 
+private void changeEstado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	r.setIDusuario(Integer.parseInt(request.getParameter("id")));
+	r.setEstado(Boolean.parseBoolean(request.getParameter("es")));
+
+
+try {
+	//r dato que s guardo en el Vo (par de datos)
+	udao.changeEstado(r);
+	response.sendRedirect("RolController?accion=listarRoles");
+	System.out.println("Rol cambiado");
+}catch(Exception e) {
+	
+	System.out.println("Error al cambiar el estado del Rol");
+}
+}
+
 private void ver(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	r.setIDusuario(Integer.parseInt(request.getParameter("id")));
@@ -187,18 +246,37 @@ private void edit(HttpServletRequest request, HttpServletResponse response) thro
 		r.setIDusuario(Integer.parseInt(request.getParameter("id")));
 		r.setCorreo(request.getParameter("correo"));
 		r.setContraseña(request.getParameter("contrasena"));
+		
 	}
+	if(request.getParameter("chkEstado") !=null){
+		r.setEstado(true);
+	}
+	else {
+		r.setEstado(false);
+	}
+	
+	
 	
 	try {
 		udao.edit(r);
-		response.sendRedirect("UsuarioController?accion=listarRoles");
+		response.sendRedirect("RolController?accion=listarRoles");
 		System.out.println("Usuario cambiado");
 	}catch(Exception e) {
 		
 		System.out.println("Error al cambiar el Usuario");
 	}
 }
+private void abrirLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	try {
+	request.getRequestDispatcher("views/loginNico.jsp").forward(request, response);
+	System.out.println("Login abierto");
+	}catch(Exception e) {
+		
+		System.out.println("Error al abrir el formulario Login");
+	}
 
-}
+	}
+}	
 		
 

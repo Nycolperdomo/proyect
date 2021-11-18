@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import util.Conexion;
@@ -25,6 +26,37 @@ public class profesionalDao {
 	
 	//metodos
 	
+	/*public profesionalVo validarUsuario(String correo,String passw) throws SQLException {
+		profesionalVo u=new profesionalVo();
+		sql="SELECT IDprofesional,nombre,apellido,correo,estado FROM profesional JOIN usuario on usuario.IDusuario=profesional.IDprofesional where correo=? and contrasena=?;";
+		try {
+			con=c.conectar();
+			ps=con.prepareStatement(sql);
+			ps.setString(1, correo);
+			ps.setString(2, passw);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				u.setIDprofesional(rs.getInt(1));
+				u.setNombre(rs.getString(2));
+				u.setApellido(rs.getString(3));
+				//u.setCorreo(rs.getString(4));
+				u.setProUs(new UsuarioVo());
+				u.getProUs().setCorreo(rs.getString(4));
+				u.getProUs().setEstado(rs.getBoolean(5));
+
+				
+			}
+			ps.close();
+			System.out.println("Se encontró el profesional");
+		}catch(Exception e) {
+			System.out.println("Se encontró el profesional "+e.getMessage());
+		}finally {
+			con.close();
+		}
+		return u;
+	}
+	*/
+	
 	public List listar() throws SQLException {
 		List <profesionalVo> profesional = new ArrayList<>();
 		sql = "SELECT IDprofesional,nombre,apellido,telefono,tipoDocumento,numeroDocumento,fechaNacimiento,correo FROM profesional JOIN usuario on usuario.IDusuario = profesional.IDprofesional;";
@@ -41,7 +73,7 @@ public class profesionalDao {
 				p.setTelefono(rs.getString(4));
 				p.setTipoDocumento(rs.getString(5));
 				p.setNumeroDocumento(rs.getString(6));
-				p.setFechaNacimiento(rs.getDate(7));
+				p.setFechaNacimiento(rs.getString(7));
 				
 				p.setProUs(new UsuarioVo());
 				p.getProUs().setCorreo(rs.getString(8));
@@ -70,5 +102,155 @@ public class profesionalDao {
 }
 
 	
+
+public int eliminar(int id) throws SQLException {
+	sql="DELETE FROM profesional WHERE IDprofesional"+id;
 	
+	try {
+		con=c.conectar(); //Abriendo la conexión a la BD
+		ps=con.prepareStatement(sql); //preparar sentencia
+		
+		System.out.println(ps);
+		ps.executeUpdate();//Ejeución de la sentencia	
+		ps.close();
+		System.out.println("Se eliminó un profesional");
+		
+	}catch(Exception e) {
+		System.out.println("Error al eliminar profesional" +e.getMessage());
+	}
+	finally {
+		con.close();
+	}
+	return row;//Retorna cantidad de filas afectadas
+}
+
+public int registrar(profesionalVo p) throws SQLException {
+	sql="INSERT INTO profesional( nombre,apellido,telefono,tipoDocumento,numeroDocumento,fechaNacimiento, IDusuario, IDcargo) VALUES (?,?,?,?,?,?,?,?);";
+	
+	try {
+		con=c.conectar(); //Abriendo la conexión a la BD
+		ps=con.prepareStatement(sql); //preparar sentencia
+		ps.setString(1, p.getNombre());
+		ps.setString(2, p.getApellido());
+		ps.setString(3, p.getTelefono());
+		ps.setString(4, p.getTipoDocumento());
+		ps.setString(5, p.getNumeroDocumento());
+		ps.setString(6, p.getFechaNacimiento());
+	
+		ps.setInt(7, p.getProUs().getIDusuario());
+		ps.setInt(8, p.getProCar().getIDcargo());
+		
+		System.out.println(ps);
+		ps.executeUpdate();//Ejeución de la sentencia	
+		ps.close();
+		System.out.println("Se registró un profesinaal");
+		
+	}catch(Exception e) {
+		System.out.println("Error al registrar el profesionall" +e.getMessage());
+	}
+	finally {
+		con.close();
+	}
+	return row;//Retorna cantidad de filas afectadas
+}
+
+
+
+public int changeEstado(profesionalVo a) throws SQLException {
+	//sql="UPDATE afectada SET  FROM afectada WHERE IDafectada"+id;
+	
+	try {
+		con=c.conectar(); //Abriendo la conexión a la BD
+		ps=con.prepareStatement(sql); //preparar sentencia
+		ps.setBoolean(1, a.getProUs().isEstado());
+		
+		System.out.println(ps);
+		ps.executeUpdate();//Ejeución de la sentencia	
+		ps.close();
+		System.out.println("Se cambio el estado de profesional");
+		
+	}catch(Exception e) {
+		System.out.println("Error al cambiar estado de profesioanl" +e.getMessage());
+	}
+	finally {
+		con.close();
+	}
+	return row;//Retorna cantidad de filas afectadas
+
+}
+
+public profesionalVo consultaId(int id) throws SQLException {
+	profesionalVo r= new profesionalVo();
+	sql = "SELECT * FROM profesional where IDprofesional="+id;
+
+	
+	try {
+		con= c.conectar();//abriendo la conexion a la bd
+		ps= con.prepareStatement(sql);//preparar sentencia
+		rs = ps.executeQuery();//ejecucion de la sentencia y guardar el resultado en el resulSetes una sentencia de consulta por eso es query
+		
+		while(rs.next()) {
+		
+			r.setIDprofesional(rs.getInt("IDprofesional"));
+			r.setNombre(rs.getString("nombre"));
+			r.setApellido(rs.getString("apellido"));
+			r.setTelefono(rs.getString("telefono"));
+			r.setTipoDocumento(rs.getString("tipoDocumento"));
+			r.setNumeroDocumento(rs.getString("numeroDocumento"));
+			r.setFechaNacimiento(rs.getString("fechaNacimiento"));
+			
+			r.setProUs(new UsuarioVo());
+			//r.getProUs().setEstado(rs.getBoolean("estado"));
+			r.getProUs().setCorreo(rs.getString("correo"));
+			
+			r.setProCar(new cargoVo());
+			r.getProCar().setCargo(rs.getString("cargo"));
+
+			
+			System.out.println("consulta exitosa");
+		
+		}
+	ps.close();
+	}catch (Exception e) {
+		System.out.println("Consulta no exitosa"+e.getMessage());
+	}
+	finally {
+		con.close();
+	}
+	return r;
+}
+public int edit(profesionalVo r) throws SQLException {
+	sql="UPDATE profesional SET nombre=?,apellido=?,telefono=?,tipoDocumento=?,numeroDocumento=?,fechaNacimiento=?,IDusuario=?,IDcargo=? WHERE IDprofesional="+r.getIDprofesional();
+	
+	try {
+		con=c.conectar(); //Abriendo la conexión a la BD
+		ps=con.prepareStatement(sql); //preparar sentencia
+		ps.setString(1, r.getNombre());
+		ps.setString(2, r.getApellido());
+		ps.setString(3, r.getTelefono());
+		ps.setString(4,r.getTipoDocumento());
+		ps.setString(5, r.getNumeroDocumento());
+		//falta correo y contraseña ps.setInt(7, p.getProUs().getIDusuario());
+		ps.setString(6, r.getFechaNacimiento());
+		//get usuario o get correo y contraseña
+		ps.setString(7, r.getProUs().getCorreo());
+		ps.setString(8, r.getProUs().getContraseña());
+		ps.setString(9,r.getProCar().getCargo());
+		
+		System.out.println(ps);
+		ps.executeUpdate();//Ejeución de la sentencia	
+		ps.close();
+		System.out.println("Se cambió el profesional");
+		
+	}catch(Exception e) {
+		System.out.println("Error al cambiar el profesional" +e.getMessage());
+	}
+	finally {
+		con.close();
+	}
+	return row;//Retorna cantidad de filas afectadas
+}
+
+
+
 }

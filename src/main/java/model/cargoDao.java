@@ -71,6 +71,46 @@ public class cargoDao {
 	
 }
 
+	public List listarCargos() throws SQLException {
+		List <cargoVo> cargo = new ArrayList<>();
+		sql = "SELECT * from cargo;";
+		
+		try {
+			con= c.conectar();//abriendo la conexion a la bd
+			ps= con.prepareStatement(sql);//preparar sentencia
+			rs = ps.executeQuery();//ejecucion de la sentencia y guardar el resultado en el resulSet
+			while(rs.next()) {
+				cargoVo car = new cargoVo();
+				
+				
+				car.setCargo(rs.getString("cargo"));
+				
+				
+				// asi no se hace u.setDescripcionRol(rs.getString(10));
+				//otra forma de hacerlo
+				//r.setIdRol(rs.getInt("idRol"));
+			
+				cargo.add(car);
+				System.out.println("conexion exitosa");
+			
+			}
+			
+			ps.close();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			System.out.println("conexion no exitosa"+e.getMessage());
+		}
+		finally {
+			con.close();
+		}
+		return cargo;	
+	
+}
+
 	
 	
 }
+
+	

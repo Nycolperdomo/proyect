@@ -5,8 +5,8 @@ import java.sql.Date;
 public class afectadaVo {
 
 	private int IDafectada;
-	private String nombre,apellido,telefono,tipoDocumento,numeroDocumento;
-	private Date fechaNacimiento;
+	private String fechaNacimiento,nombre,apellido,telefono,tipoDocumento,numeroDocumento;
+	//private Date ;
 	
 	private UsuarioVo afecUs;
 	
@@ -15,7 +15,7 @@ public class afectadaVo {
 	}
 
 	public afectadaVo(int iDafectada, String nombre, String apellido, String telefono, String tipoDocumento,
-			String numeroDocumento, Date fechaNacimiento, UsuarioVo afecUs) {
+			String numeroDocumento, String fechaNacimiento, UsuarioVo afecUs) {
 		super();
 		IDafectada = iDafectada;
 		this.nombre = nombre;
@@ -75,11 +75,11 @@ public class afectadaVo {
 		this.numeroDocumento = numeroDocumento;
 	}
 
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 

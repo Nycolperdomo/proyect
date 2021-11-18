@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -45,7 +46,21 @@ public class AfectadaController extends HttpServlet {
 			case "listar": 
 				listar(request,response);
 				break;
+			case "delete":
+				delete(request,response);
+				break;
+
+			case "ver":
+				ver(request,response);
+				break;
 				
+			case "changeEstado":
+				changeEstado(request,response);
+				break;
+				
+			case "edit":
+				edit(request,response);
+			break;
 			/*case "abrirForm":
 				abrirForm(request,response);
 				break;
@@ -53,19 +68,7 @@ public class AfectadaController extends HttpServlet {
 			case "add":
 				add(request,response);
 				break;
-			case "delete":
-				delete(request,response);
-				break;
-			case "cambiarEstado":
-				cambiarEstado(request,response);
-					break;
-			case "ver":
-				ver(request,response);
-				break;
-				
-			case "edit":
-				edit(request,response);
-			break;*/
+			;*/
 			default:
 				response.sendRedirect("login.jsp");
 			}
@@ -94,7 +97,7 @@ private void listar(HttpServletRequest request, HttpServletResponse response) th
 			List afect= aDao.listar();
 			//(para que del controlador suba a una vista)
 			request.setAttribute("afectadas", afect);
-			request.getRequestDispatcher("views/afectadas.jsp").forward(request, response);
+			request.getRequestDispatcher("views/afectada.jsp").forward(request, response);
 			System.out.println("afectadas encontrados");
 			
 		} catch (Exception e) {
@@ -106,4 +109,86 @@ private void listar(HttpServletRequest request, HttpServletResponse response) th
 		
 	}
 
+
+private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	if(request.getParameter("id") !=null) {
+		aVo.setIDafectada(Integer.parseInt(request.getParameter("id")));
+	}
+	
+	
+	try {
+		aDao.eliminar(aVo.getIDafectada());
+		response.sendRedirect("AfectadaController?accion=listar");
+		System.out.println("Afectada eliminado");
+	}catch(Exception e) {
+		
+		System.out.println("Error al eliminar el formulario Afectada");
+	}
+}
+
+private void changeEstado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		
+		aVo.setIDafectada(Integer.parseInt(request.getParameter("id")));
+		aVo.getAfecUs().setEstado(Boolean.parseBoolean(request.getParameter("es")));
+	
+	
+	try {
+		aDao.changeEstado(aVo);
+		
+		response.sendRedirect("AfectadaController?accion=listar");
+		System.out.println("afectada cambiada");
+	}catch(Exception e) {
+		
+		System.out.println("Error al cambiar el estado de afectada");
+	}
+}
+
+
+private void ver(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	aVo.setIDafectada(Integer.parseInt(request.getParameter("id")));
+	try {
+		//(para que del modelo suba al controlador)
+		aVo=aDao.consultaId(aVo.getIDafectada());
+		//(para que del controlador suba a una vista)
+		request.setAttribute("afectada", aVo);
+		request.getRequestDispatcher("views/afectada-edit.jsp").forward(request, response);
+		System.out.println("afectada encontrado");
+		
+	} catch (Exception e) {
+		System.out.println("afectada no encontrado"+e.getMessage());
+	}
+	finally {
+		//rdao=null;
+		}
+	
+	}
+
+private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	if(request.getParameter("id")!=null && request.getParameter("correo") !=null && request.getParameter("contrasena")!=null) {
+		
+		aVo.setIDafectada(Integer.parseInt(request.getParameter("id")));
+		aVo.setNombre(request.getParameter("nombre"));
+		aVo.setApellido(request.getParameter("apellido"));
+		aVo.setTelefono(request.getParameter("telefono"));
+		aVo.setTipoDocumento(request.getParameter("telefono"));
+		aVo.setNumeroDocumento(request.getParameter("numeroDcumento"));
+		aVo.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+		aVo.getAfecUs().setCorreo(request.getParameter("correo"));
+		aVo.getAfecUs().setContraseña(request.getParameter("contrasena"));
+	}
+	
+	try {
+		aDao.edit(aVo);
+		response.sendRedirect("AfectadaController?accion=listar");
+		System.out.println("Afectada cambiado");
+	}catch(Exception e) {
+		
+		System.out.println("Error al cambiar a afectada");
+	}
+
+}
 }
