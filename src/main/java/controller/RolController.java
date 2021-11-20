@@ -42,6 +42,7 @@ public class RolController extends HttpServlet {
 	
 		String accion= request.getParameter("accion");
 		HttpSession session = request.getSession();
+		System.out.println("Entró al controlador"+accion);
 		try {
 			if(accion!=null) {
 				switch (accion) {
@@ -58,7 +59,7 @@ public class RolController extends HttpServlet {
 						if(r.isEstado()==true) {
 							System.out.println("Se encontro un usuario activo");
 							session.setAttribute("us", r);
-							response.sendRedirect("RolController?accion=listarRoles");
+							response.sendRedirect("RollController?accion=listarRoles");
 							
 						}
 						else if(r.isEstado()==false){
