@@ -25,7 +25,7 @@
  				<a href="">Inicio</a>
                  <a href="">Iniciar Sesion</a>
  				<a href="">Registrar Cuenta Afectada</a>
- 				<h1>Hola </h1>
+ 				
  				
  		</div>
  	</header>
