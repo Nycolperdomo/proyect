@@ -13,7 +13,7 @@ public class UsuarioDao {
 
 	//definir variables necesarias pra realizar operaciones sibre la bd
 	UsuarioVo uvo = new UsuarioVo();
-	UsuarioDao udao = new UsuarioDao();
+
 	
 	Connection con;
 	ResultSet rs;
@@ -27,7 +27,7 @@ public class UsuarioDao {
 	//metodos
 	public List listarRoles() throws SQLException {
 		List <UsuarioVo> roles = new ArrayList <>();
-		sql = "SELECT * FROM usuario WHERE estado = true;";
+		sql = "SELECT * FROM usuario;";
 		//sql = "SELECT * FROM usuario";
 		
 		try {
@@ -41,6 +41,7 @@ public class UsuarioDao {
 				 r.setCorreo(rs.getString("correo"));
 				 r.setContraseña(rs.getString("contrasena"));
 				 r.setEstado(rs.getBoolean("estado"));
+				 r.setCargo(rs.getString("cargo"));
 				
 				roles.add(r);
 				System.out.println("conexion exitosa");
@@ -64,13 +65,14 @@ public class UsuarioDao {
 	
 	//metodo registro
 	public int registrar(UsuarioVo r) throws SQLException {
-		sql="INSERT INTO usuario(correo,contrasena,estado) VALUES(?,?,?)";
+		sql="INSERT INTO usuario(correo,contrasena,estado,cargo) VALUES(?,?,?,?)";
 		try {
 			con= c.conectar();//abriendo la conexion a la bd
 			ps= con.prepareStatement(sql);//preparar sentencia
 			ps.setString(1, r.getCorreo());
 			ps.setString(2, r.getContraseña());
 			ps.setBoolean(3,r.isEstado());
+			ps.setString(4, r.getCargo());
 			System.out.println(ps);
 			ps.executeUpdate();//ejecucion de la sentencia sentencias dif a consulta
 			ps.close();
@@ -85,6 +87,55 @@ public class UsuarioDao {
 		}
 		return row;//retorna cantidad de filas afectadas
 	}
+	
+	public int registrarAfe(UsuarioVo r) throws SQLException {
+		sql="INSERT INTO usuario(correo,contrasena,estado,cargo) VALUES(?,?,?,?)";
+		try {
+			con= c.conectar();//abriendo la conexion a la bd
+			ps= con.prepareStatement(sql);//preparar sentencia
+			ps.setString(1, r.getCorreo());
+			ps.setString(2, r.getContraseña());
+			ps.setBoolean(3,r.isEstado());
+			ps.setString(4, r.getCargo());
+			System.out.println(ps);
+			ps.executeUpdate();//ejecucion de la sentencia sentencias dif a consulta
+			ps.close();
+			System.out.println("se registro una afectada");
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			System.out.println("error al registrar el afec"+e.getMessage());
+		}
+		finally {
+			con.close();
+		}
+		return row;//retorna cantidad de filas afectadas
+	}
+	
+	public int registrarDatos(UsuarioVo r) throws SQLException {
+		sql="INSERT INTO usuario(correo,contrasena,estado,cargo) VALUES(?,?,?,?)";
+		try {
+			con= c.conectar();//abriendo la conexion a la bd
+			ps= con.prepareStatement(sql);//preparar sentencia
+			ps.setString(1, r.getCorreo());
+			ps.setString(2, r.getContraseña());
+			ps.setBoolean(3,r.isEstado());
+			ps.setString(4, r.getCargo());
+			System.out.println(ps);
+			ps.executeUpdate();//ejecucion de la sentencia sentencias dif a consulta
+			ps.close();
+			System.out.println("se registro una afectada");
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			System.out.println("error al registrar el afec"+e.getMessage());
+		}
+		finally {
+			con.close();
+		}
+		return row;//retorna cantidad de filas afectadas
+	}
+		
 		
 
 public int eliminar(int id) throws SQLException {
@@ -148,6 +199,7 @@ public UsuarioVo consultaId(int id) throws SQLException {
 			r.setCorreo(rs.getString("correo"));
 			r.setContraseña(rs.getString("contrasena"));
 			r.setEstado(rs.getBoolean("estado"));
+			r.setCargo(rs.getString("cargo"));
 			
 			System.out.println("conexion exitosa");
 		
@@ -169,7 +221,7 @@ public UsuarioVo consultaId(int id) throws SQLException {
 
 
 public int edit(UsuarioVo r) throws SQLException {
-	sql="UPDATE usuario SET correo=?, contrasena=?, estado=? WHERE IDusuario="+r.getIDusuario();
+	sql="UPDATE usuario SET correo=?, contrasena=?, estado=?, cargo=? WHERE IDusuario="+r.getIDusuario();
 	
 	try {
 		con=c.conectar(); //Abriendo la conexión a la BD
@@ -177,7 +229,7 @@ public int edit(UsuarioVo r) throws SQLException {
 		ps.setString(1, r.getCorreo());
 		ps.setString(2, r.getContraseña());
 		ps.setBoolean(3,r.isEstado());
-		
+		ps.setString(4, r.getCargo());
 		System.out.println(ps);
 		ps.executeUpdate();//Ejeución de la sentencia	
 		ps.close();
@@ -194,7 +246,7 @@ public int edit(UsuarioVo r) throws SQLException {
 
 public UsuarioVo validarUsuario(String correo,String passw) throws SQLException {
 	UsuarioVo u=new UsuarioVo();
-	sql="SELECT IDusuario,correo,estado FROM usuario WHERE correo=? and contrasena=?;";
+	sql="SELECT IDusuario,correo,estado,cargo FROM usuario WHERE correo=? and contrasena=?;";
 	try {
 		con=c.conectar();
 		ps=con.prepareStatement(sql);
@@ -205,6 +257,7 @@ public UsuarioVo validarUsuario(String correo,String passw) throws SQLException 
 			u.setIDusuario(rs.getInt(1));
 			u.setCorreo(rs.getString(2));
 			u.setEstado(rs.getBoolean(3));
+			u.setCargo(rs.getString(4));
 		}
 		ps.close();
 		System.out.println("Se encontró el Usuario");

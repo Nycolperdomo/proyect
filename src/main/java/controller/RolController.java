@@ -59,17 +59,17 @@ public class RolController extends HttpServlet {
 						if(r.isEstado()==true) {
 							System.out.println("Se encontro un usuario activo");
 							session.setAttribute("us", r);
-							response.sendRedirect("RollController?accion=listarRoles");
+							response.sendRedirect("RolController?accion=addatos");
 							
 						}
 						else if(r.isEstado()==false){
 							System.out.println("Se encontro un usuario inactivo");
 							//para enviar un msm
-							request.getRequestDispatcher("RolController?accion=abrirLogin&msn=Usuario Inactivo consulte con el administrador");
+							response.sendRedirect("RolController?accion=abrirLogin&msn=Usuario Inactivo consulte con el administrador");
 						}
 						else {
 							System.out.println("Se encontro no registrado");
-							request.getRequestDispatcher("RolController?accion=abrirLogin&msn=Datos de acceso incorrectos");
+							response.sendRedirect("RolController?accion=abrirLogin&msn=Datos de acceso incorrectos");
 						}
 					}catch(Exception e) {
 						System.out.println("Se presentó un error "+e);
@@ -77,6 +77,11 @@ public class RolController extends HttpServlet {
 					 
 					
 					break;
+				case "logout":
+					session.removeAttribute("us");
+					session.invalidate();
+					response.sendRedirect("RolController?accion=abrirLogin&msn=Se ha cerrado la sesion");
+				break;
 				case "listarRoles": 
 					System.out.println("entro a la accion listar");
 					listarRoles(request,response);
@@ -86,10 +91,21 @@ public class RolController extends HttpServlet {
 					System.out.println("entro a la accion abrirFormulario");
 					abrirForm(request,response);
 					break;
-					
+				case "addatos":
+					addatos(request,response);
+				break;
 				case "add":
 					System.out.println("entro a la accion aregar");
 					add(request,response);
+					break;
+				case "abrirFormulario2":
+					System.out.println("entro a la accion abrirFormulario");
+					abrirFormulario2(request,response);
+					break;
+					
+				case "addA":
+					System.out.println("entro a la accion aregar");
+					addA(request,response);
 					break;
 				case "delete":
 					delete(request,response);
@@ -103,7 +119,9 @@ public class RolController extends HttpServlet {
 				case "changeEstado":
 					changeEstado(request,response);
 					break;
-					
+				case "abrirFormRegis":
+					abrirFormRegis(request,response);
+					break;
 				default:
 					response.sendRedirect("login.jsp");
 				}
@@ -159,6 +177,90 @@ private void abrirForm(HttpServletRequest request, HttpServletResponse response)
 		
 }
 
+private void abrirFormRegis(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	try {
+		//para enviar a una vista particular
+		request.getRequestDispatcher("views/add-profesional.jsp").forward(request, response);
+		System.out.println("Formulario Rol Abierto");
+	} catch (Exception e) {
+		System.out.println("Error al abrir el formulario");
+	
+	}
+		
+}
+
+private void abrirFormulario2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	try {
+		//para enviar a una vista particular
+		request.getRequestDispatcher("views/reg.jsp").forward(request, response);
+		System.out.println("Formulario Rol Abierto");
+	} catch (Exception e) {
+		System.out.println("Error al abrir el formulario");
+	
+	}
+		
+}
+
+private void addA(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	if(request.getParameter("correo") !=null) {
+		r.setCorreo(request.getParameter("correo"));
+	}
+	if(request.getParameter("contrasena") !=null) {
+		r.setContraseña(request.getParameter("contrasena"));
+	}
+
+	if(request.getParameter("chkEstado") !=null){
+		r.setEstado(true);
+	}
+	else {
+		r.setEstado(false);
+	}
+	if(request.getParameter("cargo") !=null) {
+		r.setCargo(request.getParameter("cargo"));
+	}
+	try {
+		udao.registrarAfe(r);
+		response.sendRedirect("RolController?accion=abrirLogin");
+		System.out.println("Rol registrado");
+	}catch(Exception e) {
+		
+		System.out.println("Error al abrir el formulario Rol");
+	}
+}
+
+
+
+private void addatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	if(request.getParameter("nombre") !=null) {
+		
+		r.getProfesional().setNombre(request.getParameter("nombre"));
+	}
+	if(request.getParameter("contrasena") !=null) {
+		r.setContraseña(request.getParameter("contrasena"));
+	}
+
+	if(request.getParameter("chkEstado") !=null){
+		r.setEstado(true);
+	}
+	else {
+		r.setEstado(false);
+	}
+	if(request.getParameter("cargo") !=null) {
+		r.setCargo(request.getParameter("cargo"));
+	}
+	try {
+		udao.registrarAfe(r);
+		response.sendRedirect("RolController?accion=abrirFormRegis");
+		System.out.println("Rol registrado");
+	}catch(Exception e) {
+		
+		System.out.println("Error al abrir el formulario Rol");
+	}
+}
+
+
 private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	if(request.getParameter("correo") !=null) {
@@ -174,7 +276,9 @@ private void add(HttpServletRequest request, HttpServletResponse response) throw
 	else {
 		r.setEstado(false);
 	}
-	
+	if(request.getParameter("cargo") !=null) {
+		r.setCargo(request.getParameter("cargo"));
+	}
 	try {
 		udao.registrar(r);
 		response.sendRedirect("RolController?accion=listarRoles");
@@ -206,8 +310,8 @@ private void delete(HttpServletRequest request, HttpServletResponse response) th
 private void changeEstado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	r.setIDusuario(Integer.parseInt(request.getParameter("id")));
-	r.setEstado(Boolean.parseBoolean(request.getParameter("es")));
-
+	r.setEstado(Boolean.parseBoolean(request.getParameter("estad")));
+System.out.println("estad");
 
 try {
 	//r dato que s guardo en el Vo (par de datos)
@@ -241,12 +345,15 @@ private void ver(HttpServletRequest request, HttpServletResponse response) throw
 	}
 
 private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//estos datos se miran desde la vista como tal en el name 
+	System.out.println(request.getParameter("password"));
+	r.setIDusuario(Integer.parseInt(request.getParameter("id")));
+	r.setCorreo(request.getParameter("correo"));
+	r.setContraseña(request.getParameter("password"));
+	r.setCargo(request.getParameter("cargo"));
 	
-	if(request.getParameter("id")!=null && request.getParameter("correo") !=null && request.getParameter("contrasena")!=null) {
+	if(request.getParameter("id")!=null && request.getParameter("correo") !=null && request.getParameter("password")!=null) {
 		
-		r.setIDusuario(Integer.parseInt(request.getParameter("id")));
-		r.setCorreo(request.getParameter("correo"));
-		r.setContraseña(request.getParameter("contrasena"));
 		
 	}
 	if(request.getParameter("chkEstado") !=null){
@@ -274,10 +381,8 @@ private void abrirLogin(HttpServletRequest request, HttpServletResponse response
 	System.out.println("Login abierto");
 	}catch(Exception e) {
 		
-		System.out.println("Error al abrir el formulario Login");
+		System.out.println("Error al abrir el formulario Login" +e.getMessage());
 	}
 
-	}
-}	
-		
-
+}
+}

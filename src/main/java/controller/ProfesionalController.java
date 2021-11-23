@@ -196,16 +196,14 @@ private void add(HttpServletRequest request, HttpServletResponse response) throw
 		pVo.setTipoDocumento(request.getParameter("tipodoc"));
 		pVo.setNumeroDocumento(request.getParameter("numdoc"));
 		pVo.setFechaNacimiento(request.getParameter("fechaNa"));
+		
 		//pVo.setCorreo(request.getParameter("correo"));
 		//pVo.setPassword(request.getParameter("password"));
-		UsuarioVo r=new UsuarioVo();
-		r.setIDusuario(Integer.parseInt(request.getParameter("correo")));
 		//r.setContraseña(request.getParameter("password"));
 		//r.setIDusuario(Integer.parseInt(request.getParameter("")));
 		
 		cargoVo c= new cargoVo(); 
 		c.setIDcargo(Integer.parseInt(request.getParameter("carpro")));
-		pVo.setProUs(r);
 		pVo.setProCar(c);
 		
 	}
@@ -323,12 +321,12 @@ private void edit(HttpServletRequest request, HttpServletResponse response) thro
 		pVo.setNombre(request.getParameter("nombre"));
 		pVo.setApellido(request.getParameter("apellido"));
 		pVo.setTelefono(request.getParameter("telefono"));
-		pVo.setTipoDocumento(request.getParameter("telefono"));
-		pVo.setNumeroDocumento(request.getParameter("numeroDcumento"));
-		pVo.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+		pVo.setTipoDocumento(request.getParameter("tipoDoc"));
+		pVo.setNumeroDocumento(request.getParameter("nuDocumento"));
+		pVo.setFechaNacimiento(request.getParameter("fechaNa"));
 		pVo.getProUs().setCorreo(request.getParameter("correo"));
-		pVo.getProUs().setContraseña(request.getParameter("contrasena"));
-		pVo.getProCar().setCargo(request.getParameter("cargo"));
+		pVo.getProUs().setContraseña(request.getParameter("password"));
+		pVo.getProCar().setCargo(request.getParameter("carpro"));
 		
 	}
 	
@@ -341,6 +339,7 @@ private void edit(HttpServletRequest request, HttpServletResponse response) thro
 		System.out.println("Error al cambiar el Profesional");
 	}
 }
+
 
 
 /*private void abrirLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

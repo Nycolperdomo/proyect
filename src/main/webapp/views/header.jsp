@@ -1,6 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%
+response.setHeader("Pragma","No-cache");
+response.setHeader("Cache-control", "no-cache, no-store,must-revalidate");
+response.setDateHeader("Expires",0);
+if(session.getAttribute("us")!=null){
+		
+%>
+<%@page session="true" %>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -59,27 +66,41 @@
     
       <a href="#" class="d-flex align-items-center text-white text-decoration-none">
          <i class="bi bi-person-plus"></i>
-        <strong>Bienvenido, usuario</strong>
-      </a>
+         <div>
+        <strong>Bienvenido, ${us.correo}</strong>
+        <!-- AQUI COMO MANEJO LO DE LOS NOMBRES YA QUE SON AFECTADA Y PROFESIONALO -->
+        
+        </div>
   
+      </a>
+      <br>
+   <a href="RolController?accion=" class="btn btn-info">Registrar mi caso</a>
+   <br>
+  <a href="RolController?accion=logout" class="btn btn-secondary">Cerrar Sesion</a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
+      <li class="nav-item" <c:if test="${us.cargo=='Cliente'}">hidden</c:if>>
         <a href="RolController?accion=listarRoles" class="nav-link active" aria-current="page">
          <i class="bi bi-people-fill"></i>
           Afectadas
         </a>
       </li>
-      <li>
-        <a href="#" class="nav-link text-white">
+      <li <c:if test="${us.cargo=='Cliente'}">hidden</c:if>>
+        <a href="#" class="nav-link text-white" >
           <i class="bi bi-folder-check"></i>
-          Categorizacion casos
+          Casos
         </a>
       </li>
-      <li>
+        <li <c:if test="${us.cargo!='Cliente'}">hidden</c:if>>
+        <a href="#" class="nav-link text-white" >
+          <i class="bi bi-folder-check"></i>
+          Mis casos
+        </a>
+      </li>
+      <li <c:if test="${us.cargo!='Cliente'}">hidden</c:if>>
         <a href="#" class="nav-link text-white">
-          <i class="bi bi-chat-dots"></i>
-          Chat
+          <i class="bi bi-folder-check"></i>
+          Asesoria
         </a>
       </li>
       <li>
@@ -93,3 +114,9 @@
     
   </div>
   
+ <%
+ }else{
+	 request.getRequestDispatcher("loginNico.jsp").forward(request, response);
+ }
+ 
+ %> 

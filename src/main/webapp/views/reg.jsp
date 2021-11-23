@@ -1,9 +1,18 @@
-<%@include file="header.jsp" %>
-<div class="flex-fill flex-grow-1 ms-3">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
 
-<h1>Registrar Rol</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+</head>
+<body>
+<h1>Registrar Afectada</h1>
 
-<form method="post" action="RolController?accion=add">
+<form method="post" action="RolController?accion=addA">
   	
   	<div class="form-group">
   		<label for="email">Correo</label>
@@ -41,4 +50,5 @@
 
 </div>
 
-<%@include file="footer.jsp" %>
+</body>
+</html>

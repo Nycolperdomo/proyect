@@ -2,7 +2,7 @@ function changeEstado(e,id,estad,con){
 	e.preventDefault();
 	
 	console.log(id);
-	console.log(es);
+	console.log(estad);
 	console.log(con);
 	
 	Swal.fire({
@@ -18,11 +18,11 @@ function changeEstado(e,id,estad,con){
 	if(estad===true){
 	
 	//la accion cambiarEstado esta en el controlador en elncase
-	ruta=con+"Controller?accion=changeEstado&id="+id+"&es=false";
+	ruta=con+"Controller?accion=changeEstado&id="+id+"&estad=false";
 	window.setTimeout(function(){window.location.href=ruta},2000);
 	}
 	else{
-	ruta=con+"Controller?accion=changeEstado&id="+id+"&es=true";
+	ruta=con+"Controller?accion=changeEstado&id="+id+"&estad=true";
 	window.setTimeout(function(){window.location.href=ruta},2000);	
 	}
     Swal.fire({

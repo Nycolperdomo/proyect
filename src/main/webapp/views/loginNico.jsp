@@ -21,7 +21,6 @@
 <article class="card-body">
 <h4 class="card-title mb-4 mt-1">Iniciar sesion</h4>
 	 <form method="post" action="RolController?accion=login">
-    
     <div class="form-group">
     	<label for="correo" class="form-label">Correo</label>
     	<div class="input-group">
@@ -47,7 +46,9 @@
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block"> Iniciar sesion</button>
         
-                <button type="submit" class="btn btn-success btn-block"> Crear Cuenta</button>
+	<!-- <button  href="RolController?accion=registrar" type="submit" class="btn btn-success btn-block"> Crear Cuenta</button> -->
+	<a href="RolController?accion=abrirFormulario2" class="btn btn-success btn-block" role="button">Crear cuenta Cliente</a>
+		
     </div> <!-- form-group// -->                                                           
 </form>
 </article>

@@ -78,8 +78,11 @@
 		
 		<div>
 			<button type="submit" class="btn btn-primary">Guardar</button>
+			
+<a href="RolController?accion=listarRoles" class="btn btn-secondary" role="button">Siguiente</a>
 		</div>
-
+		
+		
 	</form>
 
 </div>

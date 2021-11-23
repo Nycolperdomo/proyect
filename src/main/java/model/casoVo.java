@@ -11,7 +11,7 @@ public class casoVo {
 
 	private tipoAbusoVo abuCas;
 	private tipoAsesoriaVo aseCas;
-	private chatVo chaC;
+	
 	
 	
 	public casoVo () {
@@ -20,7 +20,7 @@ public class casoVo {
 
 
 	public casoVo(int iDcaso, Boolean estado, Date fechaInicio, Date fechaFin, tipoAbusoVo abuCas,
-			tipoAsesoriaVo aseCas, chatVo chaC) {
+			tipoAsesoriaVo aseCas) {
 		super();
 		IDcaso = iDcaso;
 		this.estado = estado;
@@ -28,7 +28,7 @@ public class casoVo {
 		this.fechaFin = fechaFin;
 		this.abuCas = abuCas;
 		this.aseCas = aseCas;
-		this.chaC = chaC;
+		
 	}
 
 
@@ -92,14 +92,6 @@ public class casoVo {
 	}
 
 
-	public chatVo getChaC() {
-		return chaC;
-	}
-
-
-	public void setChaC(chatVo chaC) {
-		this.chaC = chaC;
-	}
 	
 	
 	

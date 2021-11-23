@@ -31,6 +31,18 @@
 	</div>
 
 
+  	<div class="form-group">
+			<label for="cargo">Cargo Usuario</label>
+			 <select class="form-select" name="cargo">
+				<option>Seleccione el cargo del Usuario</option>
+				<option>Abogada</option>
+				<option>Psicologa</option>
+				<option>Cliente</option>
+			</select>
+  	
+
+<div>
+
 <div>
 <button type="submit" class="btn btn-primary">Guardar</button>
 </div>
