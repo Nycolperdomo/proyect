@@ -9,7 +9,6 @@ public class profesionalVo {
 	//private Date fechaNacimiento ;
 	
 	private UsuarioVo proUs;
-	private cargoVo proCar;
 	//private CargoVo procar;
 	
 	public profesionalVo() {
@@ -18,7 +17,7 @@ public class profesionalVo {
 
 
 	public profesionalVo(int iDprofesional, String nombre, String apellido, String telefono, String correo,
-			String tipoDocumento, String numeroDocumento, String fechaNacimiento, UsuarioVo proUs, cargoVo proCar) {
+			String tipoDocumento, String numeroDocumento, String fechaNacimiento, UsuarioVo proUs) {
 		super();
 		IDprofesional = iDprofesional;
 		this.nombre = nombre;
@@ -29,7 +28,6 @@ public class profesionalVo {
 		this.numeroDocumento = numeroDocumento;
 		this.fechaNacimiento = fechaNacimiento;
 		this.proUs = proUs;
-		this.proCar = proCar;
 	}
 
 
@@ -106,14 +104,6 @@ public class profesionalVo {
 	}
 
 
-	public cargoVo getProCar() {
-		return proCar;
-	}
-
-
-	public void setProCar(cargoVo proCar) {
-		this.proCar = proCar;
-	}
 	
 	
 	

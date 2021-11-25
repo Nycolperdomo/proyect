@@ -35,9 +35,10 @@
 			<label for="cargo">Cargo Usuario</label>
 			 <select class="form-select" name="cargo">
 				<option>Seleccione el cargo del Usuario</option>
-				<option>Abogada</option>
-				<option>Psicologa</option>
+				<!--  <option>Abogada</option>-->
+				<!--<option>Psicologa</option>-->
 				<option>Cliente</option>
+					<!--  <option>Administrador</option>-->
 				
 			</select>
   	

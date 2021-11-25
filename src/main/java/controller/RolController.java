@@ -59,7 +59,7 @@ public class RolController extends HttpServlet {
 						if(r.isEstado()==true) {
 							System.out.println("Se encontro un usuario activo");
 							session.setAttribute("us", r);
-							response.sendRedirect("RolController?accion=addatos");
+							response.sendRedirect("RolController?accion=listarRoles");
 							
 						}
 						else if(r.isEstado()==false){
@@ -118,6 +118,13 @@ public class RolController extends HttpServlet {
 					break;
 				case "changeEstado":
 					changeEstado(request,response);
+					break;
+				case "openPass":
+					openPass(request,response);
+					break;
+
+				case "changePass":
+					changePass(request,response);
 					break;
 				case "abrirFormRegis":
 					abrirFormRegis(request,response);
@@ -220,7 +227,7 @@ private void addA(HttpServletRequest request, HttpServletResponse response) thro
 		r.setCargo(request.getParameter("cargo"));
 	}
 	try {
-		udao.registrarAfe(r);
+		udao.registrar(r);
 		response.sendRedirect("RolController?accion=abrirLogin");
 		System.out.println("Rol registrado");
 	}catch(Exception e) {
@@ -251,7 +258,7 @@ private void addatos(HttpServletRequest request, HttpServletResponse response) t
 		r.setCargo(request.getParameter("cargo"));
 	}
 	try {
-		udao.registrarAfe(r);
+		udao.registrar(r);
 		response.sendRedirect("RolController?accion=abrirFormRegis");
 		System.out.println("Rol registrado");
 	}catch(Exception e) {
@@ -385,4 +392,33 @@ private void abrirLogin(HttpServletRequest request, HttpServletResponse response
 	}
 
 }
+
+
+private void openPass(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	try {
+	request.getRequestDispatcher("views/changePass.jsp").forward(request, response);
+	System.out.println("formulario cambio contraseña abierto");
+	}catch(Exception e) {
+		
+		System.out.println("Error al abrir el formulario cambio contraseña"+e.getMessage());
+	}
+
+}
+
+
+private void changePass (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	if(request.getParameter("id")!=null && request.getParameter("passnew")!=null) {
+		r.setIDusuario(Integer.parseInt(request.getParameter("id")));
+		r.setContraseña(request.getParameter("passnew"));
+	}
+ try {
+	udao.changePassword(r);
+	request.getRequestDispatcher("RolController?accion=logout").forward(request, response);
+ }catch(Exception e) {
+	 System.out.println("error al cambiar password"+e.getMessage());
+ }
+	 
+ }
 }

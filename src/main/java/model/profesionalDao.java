@@ -125,7 +125,7 @@ public int eliminar(int id) throws SQLException {
 }
 
 public int registrar(profesionalVo p) throws SQLException {
-	sql="INSERT INTO profesional( nombre,apellido,telefono,tipoDocumento,numeroDocumento,fechaNacimiento, IDusuario, IDcargo) VALUES (?,?,?,?,?,?,?,?);";
+	sql="INSERT INTO profesional( nombre,apellido,telefono,tipoDocumento,numeroDocumento,fechaNacimiento) VALUES (?,?,?,?,?,?);";
 	
 	try {
 		con=c.conectar(); //Abriendo la conexión a la BD
@@ -137,9 +137,6 @@ public int registrar(profesionalVo p) throws SQLException {
 		ps.setString(5, p.getNumeroDocumento());
 		ps.setString(6, p.getFechaNacimiento());
 	
-		ps.setInt(7, p.getProUs().getIDusuario());
-		ps.setInt(8, p.getProCar().getIDcargo());
-		
 		System.out.println(ps);
 		ps.executeUpdate();//Ejeución de la sentencia	
 		ps.close();
@@ -203,8 +200,6 @@ public profesionalVo consultaId(int id) throws SQLException {
 			//r.getProUs().setEstado(rs.getBoolean("estado"));
 			r.getProUs().setCorreo(rs.getString("correo"));
 			
-			r.setProCar(new cargoVo());
-			r.getProCar().setCargo(rs.getString("cargo"));
 
 			
 			System.out.println("consulta exitosa");
@@ -235,7 +230,7 @@ public int edit(profesionalVo r) throws SQLException {
 		//get usuario o get correo y contraseña
 		ps.setString(7, r.getProUs().getCorreo());
 		ps.setString(8, r.getProUs().getContraseña());
-		ps.setString(9,r.getProCar().getCargo());
+		
 		
 		System.out.println(ps);
 		ps.executeUpdate();//Ejeución de la sentencia	

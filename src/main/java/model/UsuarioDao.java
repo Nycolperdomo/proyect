@@ -88,29 +88,6 @@ public class UsuarioDao {
 		return row;//retorna cantidad de filas afectadas
 	}
 	
-	public int registrarAfe(UsuarioVo r) throws SQLException {
-		sql="INSERT INTO usuario(correo,contrasena,estado,cargo) VALUES(?,?,?,?)";
-		try {
-			con= c.conectar();//abriendo la conexion a la bd
-			ps= con.prepareStatement(sql);//preparar sentencia
-			ps.setString(1, r.getCorreo());
-			ps.setString(2, r.getContraseña());
-			ps.setBoolean(3,r.isEstado());
-			ps.setString(4, r.getCargo());
-			System.out.println(ps);
-			ps.executeUpdate();//ejecucion de la sentencia sentencias dif a consulta
-			ps.close();
-			System.out.println("se registro una afectada");
-		} catch (Exception e) {
-			// TODO: handle exception
-
-			System.out.println("error al registrar el afec"+e.getMessage());
-		}
-		finally {
-			con.close();
-		}
-		return row;//retorna cantidad de filas afectadas
-	}
 	
 	public int registrarDatos(UsuarioVo r) throws SQLException {
 		sql="INSERT INTO usuario(correo,contrasena,estado,cargo) VALUES(?,?,?,?)";
@@ -246,7 +223,7 @@ public int edit(UsuarioVo r) throws SQLException {
 
 public UsuarioVo validarUsuario(String correo,String passw) throws SQLException {
 	UsuarioVo u=new UsuarioVo();
-	sql="SELECT IDusuario,correo,estado,cargo FROM usuario WHERE correo=? and contrasena=?;";
+	sql="SELECT IDusuario,correo,contrasena,estado,cargo FROM usuario WHERE correo=? and contrasena=?;";
 	try {
 		con=c.conectar();
 		ps=con.prepareStatement(sql);
@@ -256,8 +233,9 @@ public UsuarioVo validarUsuario(String correo,String passw) throws SQLException 
 		while(rs.next()) {
 			u.setIDusuario(rs.getInt(1));
 			u.setCorreo(rs.getString(2));
-			u.setEstado(rs.getBoolean(3));
-			u.setCargo(rs.getString(4));
+			u.setContraseña(rs.getString(3));
+			u.setEstado(rs.getBoolean(4));
+			u.setCargo(rs.getString(5));
 		}
 		ps.close();
 		System.out.println("Se encontró el Usuario");
@@ -269,6 +247,25 @@ public UsuarioVo validarUsuario(String correo,String passw) throws SQLException 
 	return u;
 }
 
+
+public int changePassword(UsuarioVo us) throws SQLException {
+	sql="UPDATE usuario SET contrasena=? WHERE IDusuario="+us.getIDusuario();
+	
+	try {
+	con=c.conectar();
+	ps=con.prepareStatement(sql);
+	ps.setString(1, us.getContraseña());
+	System.out.println(ps);
+	ps.executeUpdate();
+	ps.close();
+}catch (Exception e) {
+	System.out.println("Error al cambiar la contraseña"+e.getMessage());
+}
+	finally {
+		con.close();
+}
+	return row;
+}
 
 
 }

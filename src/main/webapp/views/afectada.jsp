@@ -3,7 +3,7 @@
 
 <h1>Listado de Afectadas</h1>
 
-<a href="AfectadaController?accion=abrirForm" class="btn btn-success" role="button">Agregar</a>
+<a href="AfectadaController?accion=abrirFormRegis" class="btn btn-success" role="button">Agregar</a>
 
 <table class="table table-bordered table-hover" id="dataTa">
 	

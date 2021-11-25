@@ -35,6 +35,7 @@ if(session.getAttribute("us")!=null){
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" style="color: snow; href="#">Home</a>
+          
         </li>
         <li class="nav-item">
           <a class="nav-link" style="color: snow; href="#">Features</a>
@@ -74,19 +75,45 @@ if(session.getAttribute("us")!=null){
   
       </a>
       <br>
-   <a href="RolController?accion=" class="btn btn-info">Registrar mi caso</a>
+   <a <c:if test="${us.cargo!='Cliente'}">hidden</c:if> href="RolController?accion=" class="btn btn-info">Registrar mi caso</a>
    <br>
-  <a href="RolController?accion=logout" class="btn btn-secondary">Cerrar Sesion</a>
+   
+   <a <c:if test="${us.cargo!='Cliente'}">hidden</c:if> href="AfectadaController?accion=abrirFormRegis" class="btn btn-Warning">Registrar mi informacion</a>
+   <br>
+   <a <c:if test="${us.cargo=='Cliente'}">hidden</c:if>aria-current="page" href="ProfesionalController?accion=abrirFormRegis" class="btn btn-info">Registrar mi informacion</a>
+   <br>
+ 	<a href="RolController?accion=verPerfil" class="btn btn-outline-info">Ver Perfil Sesion</a>
+ 	<br>
+ 	<a href="RolController?accion=openPass" class="btn btn-outline-info">Cambiar Contraseña</a>
+ 	<br>
+  <a href="RolController?accion=logout" class="btn btn-outline-danger">Cerrar Sesion</a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item" <c:if test="${us.cargo=='Cliente'}">hidden</c:if>>
-        <a href="RolController?accion=listarRoles" class="nav-link active" aria-current="page">
+        <a href="AfectadaController?accion=listar" class="nav-link active" aria-current="page">
          <i class="bi bi-people-fill"></i>
           Afectadas
         </a>
+        <br>
+      </li>
+       <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item" <c:if test="${us.cargo!='Administrador'}">hidden</c:if>>
+        <a href="RolController?accion=listarRoles" class="nav-link active" aria-current="page">
+         <i class="bi bi-people-fill"></i>
+          Usuarios
+        </a>
+      </li>
+      <br>
+      </li>
+       <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item" <c:if test="${us.cargo!='Administrador'}">hidden</c:if>>
+        <a href="ProfesionalController?accion=listar" class="nav-link active" aria-current="page">
+         <i class="bi bi-people-fill"></i>
+          Profesionales
+        </a>
       </li>
       <li <c:if test="${us.cargo=='Cliente'}">hidden</c:if>>
-        <a href="#" class="nav-link text-white" >
+        <a href="CasoController?accion=listar" class="nav-link text-white" >
           <i class="bi bi-folder-check"></i>
           Casos
         </a>

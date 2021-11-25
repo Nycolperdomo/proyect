@@ -3,7 +3,7 @@
 
 	<h1>Registrar Afectada</h1>
 
-	<form method="post" action="ProfesionalController?accion=add">
+	<form method="post" action="AfectadaController?accion=add">
 
 		<!-- ESTOS DATOS SE MIRAN EN LA BD  -->
 
@@ -22,9 +22,9 @@
 		</div>
 
 		<div class="form-group">
-			<label for="tipodoc">Tipo Documento</label>
+			<label for="tipoDocumento">Tipo Documento</label>
 			<!-- SELECT INDISPENSABLE EL NAME -->
-			<select name="tipodoc" class="form-select">
+			<select name="tipoDocumento" class="form-select">
 				<option selected>Selecione un tipo de documento</option>
 				<option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
 				<option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
@@ -33,32 +33,26 @@
 
 
 		<div class="form-group">
-			<label for="numdoc">Numero de Documento</label>
-			 <input class="form-control" type="text" name="numdoc" placeholder="Ingrese su numero de documento">
+			<label for="numeroDocumento">Numero de Documento</label>
+			 <input class="form-control" type="text" name="numeroDocumento" placeholder="Ingrese su numero de documento">
 		</div>
-
-
-
-		<!--<div class="form-group">
-			<label for="direccion">Direccion</label> <input class="form-control" type="text" name="direccion" placeholder="Ingrese su Direccion">
-		</div>-->
 
 
 
 		<div class="form-group">
-			<label for="fechaNa">Fecha Nacimiento</label>
-			 <input	class="form-control" type="date" name="fechaNa" placeholder="Ingrese su Fecha de Nacimiento">
+			<label for="fechaNacimiento">Fecha Nacimiento</label>
+			 <input	class="form-control" type="date" name="fechaNacimiento" placeholder="Ingrese su Fecha de Nacimiento">
 		</div>
 
 
-	 	<div class="form-group">
+	 		<!-- <div class="form-group">
 			<label for="correo">Correo</label> 
 			<input class="form-control"	type="email" name="correo"	placeholder="Ingrese su Correo Electronico">
 		</div> 
 
 
 
-		<!--  <div class="form-group">
+	 <div class="form-group">
 			<label for="password">Contraseña</label> 
 			<input class="form-control" type="password" name="password" placeholder="Ingrese su Contraseña">
 		</div>-->

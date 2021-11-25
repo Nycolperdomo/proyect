@@ -86,8 +86,8 @@ public class ProfesionalController extends HttpServlet {
 				listar(request, response);
 				break;
 				
-			case "abrirForm":
-				abrirForm(request,response);
+			case "abrirFormRegis":
+				abrirFormRegis(request,response);
 				break;
 
 			case "delete":
@@ -148,10 +148,8 @@ private void listar(HttpServletRequest request, HttpServletResponse response) th
 
 
 
-private void abrirForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+private void abrirFormRegis(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	try {
-		this.obtenerCargo(request, response);
-		//para enviar a una vista particular
 		request.getRequestDispatcher("views/add-profesional.jsp").forward(request, response);
 		System.out.println("Formulario profesional Abierto");
 	} catch (Exception e) {
@@ -161,6 +159,7 @@ private void abrirForm(HttpServletRequest request, HttpServletResponse response)
 		
 }
 
+/*
 
 private void obtenerCargo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -183,32 +182,58 @@ private void obtenerCargo(HttpServletRequest request, HttpServletResponse respon
 	}
 	
 }
-
 private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	if(request.getParameter("nombre") !=null && request.getParameter("apellido")!=null && request.getParameter("telefono") !=null
 			&& request.getParameter("tipodoc") !=null
 			&& request.getParameter("numdoc")!=null && request.getParameter("fechaNa")!=null && request.getParameter("correo")!=null
-			/*&& request.getParameter("password")!=null)*/) {
+			) {
 		pVo.setNombre(request.getParameter("nombre"));
 		pVo.setApellido(request.getParameter("apellido"));
 		pVo.setTelefono(request.getParameter("telefono"));
 		pVo.setTipoDocumento(request.getParameter("tipodoc"));
 		pVo.setNumeroDocumento(request.getParameter("numdoc"));
 		pVo.setFechaNacimiento(request.getParameter("fechaNa"));
-		
-		//pVo.setCorreo(request.getParameter("correo"));
-		//pVo.setPassword(request.getParameter("password"));
-		//r.setContraseña(request.getParameter("password"));
-		//r.setIDusuario(Integer.parseInt(request.getParameter("")));
-		
-		cargoVo c= new cargoVo(); 
-		c.setIDcargo(Integer.parseInt(request.getParameter("carpro")));
-		pVo.setProCar(c);
+	
 		
 	}
+
+*/
+
+private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+	if(request.getParameter("nombre") !=null) {
+		pVo.setNombre(request.getParameter("nombre"));
+	}
+	if(request.getParameter("apellido") !=null) {
+		pVo.setApellido(request.getParameter("apellido"));
+	}
+	if(request.getParameter("telefono") !=null) {
+		pVo.setTelefono(request.getParameter("telefono"));
+	}
+
+	if(request.getParameter("tipoDocumento") !=null) {
+		pVo.setTipoDocumento(request.getParameter("tipoDocumento"));
+	}
+
+	if(request.getParameter("numeroDocumento") !=null) {
+		pVo.setNumeroDocumento(request.getParameter("numeroDocumento"));
+	}
+
+	if(request.getParameter("fechaNacimiento") !=null) {
+		pVo.setTelefono(request.getParameter("telefono"));
+	}
+
+	try {
+		pDao.registrar(pVo);
+		response.sendRedirect("ProfesionalController?accion=listar");
+		System.out.println("Profesional registrada");
+	}catch(Exception e) {
+		
+		System.out.println("Error al abrir el formulario regidtrar profesional"+e.getMessage());
+	}
 }
+
 
 
 
@@ -321,12 +346,12 @@ private void edit(HttpServletRequest request, HttpServletResponse response) thro
 		pVo.setNombre(request.getParameter("nombre"));
 		pVo.setApellido(request.getParameter("apellido"));
 		pVo.setTelefono(request.getParameter("telefono"));
-		pVo.setTipoDocumento(request.getParameter("tipoDoc"));
-		pVo.setNumeroDocumento(request.getParameter("nuDocumento"));
-		pVo.setFechaNacimiento(request.getParameter("fechaNa"));
+		pVo.setTipoDocumento(request.getParameter("tipoDocumento"));
+		pVo.setNumeroDocumento(request.getParameter("numeroDocumento"));
+		pVo.setFechaNacimiento(request.getParameter("fechaNacimiento"));
 		pVo.getProUs().setCorreo(request.getParameter("correo"));
 		pVo.getProUs().setContraseña(request.getParameter("password"));
-		pVo.getProCar().setCargo(request.getParameter("carpro"));
+		pVo.getProUs().setCargo(request.getParameter("cargo"));
 		
 	}
 	
@@ -341,16 +366,5 @@ private void edit(HttpServletRequest request, HttpServletResponse response) thro
 }
 
 
-
-/*private void abrirLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	try {
-	request.getRequestDispatcher("views/loginNico.jsp").forward(request, response);
-	System.out.println("Login abierto");
-	}catch(Exception e) {
-		
-		System.out.println("Error al abrir el formulario Login");
-	}
-}*/
 }
 	

@@ -183,6 +183,32 @@ sql="UPDATE afectada SET nombre=?,apellido=?,telefono=?,tipoDocumento=?,numeroDo
 	return row;//Retorna cantidad de filas afectadas
 }
 
+public int registrar(afectadaVo r) throws SQLException {
+	sql="INSERT INTO afectada (nombre,apellido,telefono,tipoDocumento,numeroDocumento,fechaNacimiento) VALUES(?,?,?,?,?,?)";
+	try {
+		con= c.conectar();//abriendo la conexion a la bd
+		ps= con.prepareStatement(sql);//preparar sentencia
+		ps.setString(1, r.getNombre());
+		ps.setString(2, r.getApellido());
+		ps.setString(3, r.getTelefono());
+		ps.setString(4, r.getTipoDocumento());
+		ps.setString(5, r.getNumeroDocumento());
+		ps.setString(6, r.getFechaNacimiento());
+	
+		System.out.println(ps);
+		ps.executeUpdate();//ejecucion de la sentencia sentencias dif a consulta
+		ps.close();
+		System.out.println("se registro una afectada");
+	} catch (Exception e) {
+		// TODO: handle exception
+
+		System.out.println("error al registrar el afec"+e.getMessage());
+	}
+	finally {
+		con.close();
+	}
+	return row;//retorna cantidad de filas afectadas
+}
 
 
 }

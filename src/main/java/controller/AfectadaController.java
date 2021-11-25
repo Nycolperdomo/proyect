@@ -61,6 +61,13 @@ public class AfectadaController extends HttpServlet {
 			case "edit":
 				edit(request,response);
 			break;
+			case "add":
+				add(request,response);
+			break;
+			case "abrirFormRegis":
+				abrirFormRegis(request,response);
+				break;
+				
 			/*case "abrirForm":
 				abrirForm(request,response);
 				break;
@@ -88,6 +95,7 @@ public class AfectadaController extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
 	
 	
 private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -175,10 +183,11 @@ private void edit(HttpServletRequest request, HttpServletResponse response) thro
 		aVo.setApellido(request.getParameter("apellido"));
 		aVo.setTelefono(request.getParameter("telefono"));
 		aVo.setTipoDocumento(request.getParameter("telefono"));
-		aVo.setNumeroDocumento(request.getParameter("numeroDcumento"));
+		aVo.setNumeroDocumento(request.getParameter("numeroDocumento"));
 		aVo.setFechaNacimiento(request.getParameter("fechaNacimiento"));
 		aVo.getAfecUs().setCorreo(request.getParameter("correo"));
 		aVo.getAfecUs().setContraseña(request.getParameter("contrasena"));
+		aVo.getAfecUs().setCargo(request.getParameter("cargo"));
 	}
 	
 	try {
@@ -191,4 +200,57 @@ private void edit(HttpServletRequest request, HttpServletResponse response) thro
 	}
 
 }
+
+
+
+
+
+private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	if(request.getParameter("nombre") !=null) {
+		aVo.setNombre(request.getParameter("nombre"));
+	}
+	if(request.getParameter("apellido") !=null) {
+		aVo.setApellido(request.getParameter("apellido"));
+	}
+	if(request.getParameter("telefono") !=null) {
+		aVo.setTelefono(request.getParameter("telefono"));
+	}
+
+	if(request.getParameter("tipoDocumento") !=null) {
+		aVo.setTipoDocumento(request.getParameter("tipoDocumento"));
+	}
+
+	if(request.getParameter("numeroDocumento") !=null) {
+		aVo.setNumeroDocumento(request.getParameter("numeroDocumento"));
+	}
+
+	if(request.getParameter("fechaNacimiento") !=null) {
+		aVo.setTelefono(request.getParameter("fechaNacimiento"));
+	}
+
+	try {
+		aDao.registrar(aVo);
+		response.sendRedirect("AfectadaController?accion=listar");
+		System.out.println("Afectada registrada");
+	}catch(Exception e) {
+		
+		System.out.println("Error al abrir el formulario regidtrar afec"+e.getMessage());
+	}
+}
+
+
+private void abrirFormRegis(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	try {
+		//para enviar a una vista particular
+		request.getRequestDispatcher("views/add-afectada.jsp").forward(request, response);
+		System.out.println("Formulario afectada Abierto");
+	} catch (Exception e) {
+		System.out.println("Error al abrir el formulario afectada"+e.getMessage());
+	
+	}
+		
+}
+
+
 }
