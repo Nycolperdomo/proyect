@@ -29,9 +29,11 @@
 			<td>${p.getTelefono()}</td>
 			<td>${p.getTipoDocumento()}</td>
 			<td>${p.getNumeroDocumento()}</td>
-			<td>${p.getFechaNacimiento()}</td>v
+			<td>${p.getFechaNacimiento()}</td>
 			<!-- para poner el estado de la tabla que esta relacionada -->
-			<td>${p.ProUs.correo}</td>
+			<td>${p.getCorreo()}</td>
+			
+			<!--  <td>${p.ProUs.correo}</td>
 			<td>${p.ProUs.estado }</td>
 			
 			
@@ -48,7 +50,7 @@
 				<a class="btn btn-success btn-sm" onclick="changeEstado(event,${p.getIDprofesional()},${p.ProUs.isEstado()},'Profesional')" role="button">Activar</a>
 				</td>
 			</c:if>
-			<td>
+			<td>-->
 			
 			<a class="btn btn-warning" href="ProfesionalController?accion=ver&id=${p.getIDprofesional()}" role="button">Editar</a>
 			<!--invocar una funcion con onclick(borrar es el nombre de la funcion)-->

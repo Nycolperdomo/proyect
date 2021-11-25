@@ -9,7 +9,6 @@ public class profesionalVo {
 	//private Date fechaNacimiento ;
 	
 	private UsuarioVo proUs;
-	//private CargoVo procar;
 	
 	public profesionalVo() {
 		

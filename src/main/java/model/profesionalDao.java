@@ -77,6 +77,7 @@ public class profesionalDao {
 				
 				p.setProUs(new UsuarioVo());
 				p.getProUs().setCorreo(rs.getString(8));
+				p.getProUs().setEstado(rs.getBoolean(9));
 				
 				// asi no se hace u.setDescripcionRol(rs.getString(10));
 				//otra forma de hacerlo
